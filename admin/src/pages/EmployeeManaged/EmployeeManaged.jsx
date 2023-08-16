@@ -3,8 +3,8 @@ import getDataForm from '../../components/handleForm/handleForm';
 import { API_GET_ALL_EMPLOYEE, API_POST_EMPLOYEE, API_FILTER_EMPLOYEE } from '../../configs/API';
 import './EmployeeManaged.scss';
 import { Link } from 'react-router-dom';
-import { formatDate } from '../../components/formatDate/formatDate';
-
+import { formatDate, getAge } from '../../components/formatDate/formatDate';
+import { calculateDaysWorked } from '../../components/formatDate/formatDate';
 
 function EmployeeManaged() {
     const [listEmployee, setListEmployee] = useState([]); // set list of employees
@@ -120,13 +120,16 @@ function EmployeeManaged() {
                         Tuổi
                     </div>
                     <div className="cell">
+                        Trình độ học vấn
+                    </div>
+                    <div className="cell">
                         Tên tài khoản
                     </div>
                     <div className="cell">
                         Mật Khẩu
                     </div>
                     <div className="cell">
-                        Số tháng công tác
+                        Ngày công
                     </div>
                 </div>
 
@@ -147,7 +150,10 @@ function EmployeeManaged() {
                                 {employee.gender}
                             </div>
                             <div className="cell" data-title="age">
-                                {formatDate(employee.dob,"dd/mm/yy")}
+                                {getAge(employee.dob)} tuổi
+                            </div>
+                            <div className="cell" data-title="Accname">
+                                {employee.literacy}
                             </div>
                             <div className="cell" data-title="Accname">
                                 {employee.name_account}
@@ -156,7 +162,7 @@ function EmployeeManaged() {
                                 {employee.passwords}
                             </div>
                             <div className="cell" data-title="monthofwork">
-                                {employee.date_in}
+                                {calculateDaysWorked(employee.date_in) } ngày
                             </div>
                         </div>
 

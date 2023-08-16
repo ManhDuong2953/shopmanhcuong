@@ -11,7 +11,7 @@ export async function getAllEmployee(req, res) {
 // get employee by keyword
 export async function getEmployeeByKeyword(req, res) {
     const keyword = req.params.keyword;
-    const data = await Employee.findUserBySomeThing(keyword);
+    const data = await Employee.filterEmployees(keyword);
     if (!data) {
         return res.status(404).json({ message: 'Không tìm thấy người dùng' });
     }

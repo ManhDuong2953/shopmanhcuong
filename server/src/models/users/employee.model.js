@@ -15,7 +15,7 @@ export class Employee extends User {
     
     static async findAllUser() {
       try {
-        const query = "SELECT * FROM users WHERE access_right  = 'Employee'";
+        const query = "SELECT users.*, employees.* FROM users INNER JOIN employees ON users.id_user = employees.id_employee WHERE  access_right  = 'Employee'";
         const [result] = await pool.query(query);
         return result;
       } catch (error) {
@@ -24,7 +24,7 @@ export class Employee extends User {
       }
     }
   
-    static async findEmployeeById(keyword) {
+    static async filterEmployees(keyword) {
       try {
         const query = `SELECT users.*, employees.*
         FROM users
@@ -87,9 +87,9 @@ export class Employee extends User {
     }
   
   
-    static async findUserById(idUser) {
+    static async findEmployeeById(idUser) {
       try {
-        const query = "SELECT * FROM users WHERE id_user = ?";
+        const query = "SELECT users.*, employees.* FROM users INNER JOIN employees ON users.id_user = employees.id_employee WHERE  id_user = ?";
         const [result] = await pool.query(query, [idUser]);
         return result;
       } catch (error) {

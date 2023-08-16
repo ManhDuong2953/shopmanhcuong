@@ -28,3 +28,21 @@ export function getAge(dateString) {
     return age;
 
 }
+
+
+
+export function calculateDaysWorked(startDate) {
+    const currentDate = new Date();
+    const startDateTime = new Date(startDate).getTime();
+    const currentDateTime = currentDate.getTime();
+  
+    if (isNaN(startDateTime)) {
+      return 'Invalid start date';
+    }
+  
+    const millisecondsPerDay = 24 * 60 * 60 * 1000;
+    const daysWorked = Math.floor((currentDateTime - startDateTime) / millisecondsPerDay);
+  
+    return daysWorked;
+  }
+  

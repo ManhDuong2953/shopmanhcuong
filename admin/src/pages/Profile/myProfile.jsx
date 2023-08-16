@@ -10,17 +10,18 @@ import { formatDate, getAge } from "../../components/formatDate/formatDate";
 function MyProfile() {
     const { id } = useParams()
     const [dataEmployee, setDataEmployee] = useState([]); // set list of employees
-
     useEffect(() => {
+        console.log(API_GET_EMPLOYEE_BY_ID + id);
         fetch(API_GET_EMPLOYEE_BY_ID + id)
             .then(response => response.json())
             .then(data => {
                 setDataEmployee(data[0]); // Set the employee data
+                console.log(data);
             })
             .catch(error => {
                 console.error('Fetch error:', error);
             });
-    }, [id]);
+    }, []);
 
     return (
 
@@ -49,7 +50,7 @@ function MyProfile() {
                 <div className="detail-info">
                     <h2>Thông tin nhân sự
                         <span className="action-admin">
-                            <Link to={`/admin/profile/edit/${dataEmployee && dataEmployee.id_user}`}>
+                            <Link to={`/admin/profile/edit/${id}`}>
                                 <button>Sửa thông tin<i className="fa-solid fa-pen-to-square"></i></button>
                             </Link>
                             <Link to="/admin/profile/edit"><button>Sa thải<i className="fa-solid fa-scissors"></i></button></Link>
