@@ -68,6 +68,8 @@ function EmployeeManaged() {
         setKeywordValue(e)
     }
 
+    console.log(listEmployee);
+
 
 
     return (<>
@@ -154,7 +156,7 @@ function EmployeeManaged() {
                                 {employee.passwords}
                             </div>
                             <div className="cell" data-title="monthofwork">
-                                {employee.name_user}
+                                {employee.date_in}
                             </div>
                         </div>
 

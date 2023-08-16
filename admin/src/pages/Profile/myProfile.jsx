@@ -13,8 +13,8 @@ function MyProfile() {
 
     useEffect(() => {
         fetch(API_GET_EMPLOYEE_BY_ID + id)
-        .then(response => response.json())
-        .then(data => {
+            .then(response => response.json())
+            .then(data => {
                 setDataEmployee(data[0]); // Set the employee data
             })
             .catch(error => {
@@ -33,7 +33,7 @@ function MyProfile() {
                         <h4>Liên Hệ</h4>
                         <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <h6 className="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
-                            <span className="text-secondary"><a style={{"fontWeight": "700"}} href={dataEmployee && dataEmployee.link_social}>{dataEmployee && dataEmployee.name_user}</a></span>
+                            <span className="text-secondary"><a style={{ "fontWeight": "700" }} href={dataEmployee && dataEmployee.link_social}>{dataEmployee && dataEmployee.name_user}</a></span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <h6 className="mb-0"><i className="fa-solid fa-phone"></i>SĐT</h6>
@@ -97,7 +97,12 @@ function MyProfile() {
                 </div>
 
             </div>
-            <p className="introduce">{dataEmployee && <p className="content-intro" dangerouslySetInnerHTML={{ __html: dataEmployee.introduce }} />}</p>
+            <div className="introduce-container">
+                <h2>
+                    Giới thiệu
+                </h2>
+                <p className="introduce">{dataEmployee && <p className="content-intro" dangerouslySetInnerHTML={{ __html: dataEmployee.introduce }} />}</p>
+            </div>
         </div>
 
     );

@@ -128,7 +128,7 @@ function ProductIn() {
                   </div>
                 </div>
                 <div className="des-product-employee">
-                  <TextEditor parentComponent={valueDescription} />;
+                  <TextEditor parentComponent={valueDescription} />
                   <div className="btn-event-product">
                     <button>Sửa</button>
                     <button>Lưu</button>

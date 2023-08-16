@@ -5,11 +5,13 @@ import { useParams } from "react-router-dom";
 import getDataForm from "../../../components/handleForm/handleForm";
 import TextEditor from "../../../components/TextEditor/TextEditor";
 import { formatDate } from "../../../components/formatDate/formatDate";
+import { useNavigate } from 'react-router-dom';
 
 const ProfileEditPages = () => {
     const { id } = useParams()
     const [dataEmployee, setDataEmployee] = useState([]); // set list of employees
-
+    const [isSaving, setIsSaving] = useState(false);
+    const navigate = useNavigate();
     // get data employee
     useEffect(() => {
         //get data form
@@ -17,7 +19,6 @@ const ProfileEditPages = () => {
             .then(response => response.json())
             .then(data => {
                 setDataEmployee(data[0]); // Set the employee data
-                console.log(data[0]);
             })
             .catch(error => {
                 console.error('Fetch error:', error);
@@ -36,42 +37,55 @@ const ProfileEditPages = () => {
 
 
 
+
     //sử lý hàm submit
-    const handleSubmit = useCallback(async (e) => {
+    const handleSubmit = useCallback((e) => {
         e.preventDefault();
         try {
             let dataGetForm = getDataForm(".R-Gpdg");
-            setDataEmployee({ ...dataEmployee, ...dataGetForm });
-            await handleUpdate();
+            setDataEmployee(prevDataEmployee => ({ ...prevDataEmployee, ...dataGetForm }));
+            setIsSaving(true); // Bắt đầu quá trình lưu
         } catch (error) {
             console.error("Error while fetching data:", error);
+            setIsSaving(false); // Khi có lỗi, cũng cần đặt lại trạng thái
         }
-    }, [dataEmployee])
+    }, []);
 
+    
+        const handleUpdate = async () => {
+            await fetch(API_UPDATE_EMPLOYEE + id, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dataEmployee)
+            })
+                .catch(error => console.log(error));
+        }
 
+    useEffect(() => {
+        async function actionUpdate() {
+          if (isSaving) {
+            await handleUpdate();
+            navigate(`/profile/${id}`); 
+          }
+        }
+    
+        actionUpdate();
+      }, [isSaving, handleUpdate, id, navigate]); 
 
-    const handleUpdate = async () => {
-        await fetch(API_UPDATE_EMPLOYEE + id, {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(dataEmployee)
-        })
-            .catch(error => console.log(error));
-    }
 
 
 
     const handleInputChange = useCallback((fieldName, value) => {
         setDataEmployee(prevData => ({ ...prevData, [fieldName]: value }));
-    },[dataEmployee]);
+    }, [dataEmployee]);
 
     //handle value text introduce
     const valueDescription = useCallback((e) => {
-        // console.log(e);
-        setDataEmployee(prevData => ({ ...prevData, introduce: e }));
-    }, []);
+        setDataEmployee(prevDataEmployee => ({ ...prevDataEmployee, introduce: e }));
+    }, [dataEmployee]);
+
 
 
     const imageAddedRef = useRef(false); // Sử dụng useRef để giữ trạng thái mà không gây ra việc render lại
@@ -133,7 +147,7 @@ const ProfileEditPages = () => {
                                                         <div className="W50dp5"><input
                                                             type="text"
                                                             name="name_user"
-                                                          
+
                                                             placeholder=""
                                                             value={dataEmployee.name_user || ""}
                                                             className="CMyrTJ"
@@ -232,10 +246,9 @@ const ProfileEditPages = () => {
                                                         type="date"
                                                         name="dob"
                                                         min="1900-01-01" max="2100-01-01"
-                                                        value={dataEmployee && formatDate(dataEmployee.dob,"yy/mm/dd")}  // Không cần định dạng ở đây
+                                                        value={dataEmployee && formatDate(dataEmployee.dob, "yy/mm/dd")}  // Không cần định dạng ở đây
                                                         className="CMyrTJ"
                                                         onChange={(e) => {
-                                                            console.log(e.target.value);
                                                             handleInputChange('dob', e.target.value)
                                                         }}
                                                     />
@@ -284,11 +297,13 @@ const ProfileEditPages = () => {
                         </div>
                     </div>
                     <TextEditor valueOld={dataEmployee && dataEmployee.introduce} parentComponent={valueDescription} name="introduce" placeholder="Viết giới thiệu bản thân tại đây" />
-                    <input
-                        onClick={e => {
-                            handleSubmit(e);
-                        }}
-                        type="submit" value="Lưu" className="btn btn-solid-primary btn--m btn--inline" />
+
+                    <input onClick={e => handleSubmit(e)}
+                        type="submit"
+                        value= "Lưu"
+                        className="btn btn-solid-primary btn--m btn--inline"
+                        disabled={isSaving}
+                    />
                 </div>
             </div>
         </div>

@@ -97,3 +97,7 @@ textarea[resize='vertical'] {
 textarea[resize='horizontal'] {
   resize: horizontal !important;
 }
+
+*::-webkit-scrollbar{
+  display: none;
+}

@@ -2,23 +2,33 @@
     width: -webkit-fill-available;
     height: 100%;
     position: relative;
-    border-radius: 15px;
     overflow-x: hidden;
     box-shadow: 0px 6px 18px #00000073;
 
-    p.introduce{
-        position: absolute;
-        text-align: initial;
+    .introduce-container {
         top: 100vh;
-        background-color: antiquewhite;
+        position: absolute;
+        padding: 20px 10px 50px;
+        background: url("https://demoda.vn/wp-content/uploads/2022/03/background-giay.jpg");
+        border: 3px solid #000;
         box-shadow: 10px 0 10px rgba(0, 0, 0, 0.1);
 
-        p.content-intro{
-            font-size: 16px;
-            padding: 20px;
-            color: #3a3c40;
+        h2 {
+            position: relative;
+            padding: 30px 0 0;
+        }
+
+        p.introduce {
+            text-align: initial;
+
+            p.content-intro {
+                font-size: 16px;
+                padding: 20px;
+                color: #000000;
+            }
         }
     }
+
     .text-secondary {
         color: #2C313C;
     }
