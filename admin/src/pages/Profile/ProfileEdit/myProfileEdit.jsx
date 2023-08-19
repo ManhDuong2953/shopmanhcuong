@@ -49,30 +49,43 @@ const ProfileEditPages = () => {
             console.error("Error while fetching data:", error);
             setIsSaving(false); // Khi có lỗi, cũng cần đặt lại trạng thái
         }
-    }, []);
+    }, [dataEmployee]);
 
-    
-        const handleUpdate = async () => {
-            await fetch(API_UPDATE_EMPLOYEE + id, {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(dataEmployee)
-            })
-                .catch(error => console.log(error));
+
+    const handleUpdate = async () => {
+        const formData = new FormData();
+        // Append the fields to FormData
+        for (const key in dataEmployee) {
+            formData.append(key, dataEmployee[key]);
         }
+
+        await fetch(API_UPDATE_EMPLOYEE + id, {
+            method: 'POST',
+            body: formData
+        })
+            .catch(error => console.log(error));
+
+
+        // await fetch(API_UPDATE_EMPLOYEE + id, {
+        //     method: 'PUT',
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify(dataEmployee)
+        // })
+        //     .catch(error => console.log(error));
+    }
 
     useEffect(() => {
         async function actionUpdate() {
-          if (isSaving) {
-            await handleUpdate();
-            navigate(`/profile/${id}`); 
-          }
+            if (isSaving) {
+                await handleUpdate();
+                // navigate(`/profile/${id}`); 
+            }
         }
-    
+
         actionUpdate();
-      }, [isSaving, handleUpdate, id, navigate]); 
+    }, [isSaving, handleUpdate, id, navigate]);
 
 
 
@@ -91,7 +104,6 @@ const ProfileEditPages = () => {
     const imageAddedRef = useRef(false); // Sử dụng useRef để giữ trạng thái mà không gây ra việc render lại
     useEffect(() => {
         const inputImg = document.querySelector('#input-img');
-
         const handleInputChange = (e) => {
             imageAddedRef.current = true;
 
@@ -150,7 +162,7 @@ const ProfileEditPages = () => {
 
                                                             placeholder=""
                                                             value={dataEmployee.name_user || ""}
-                                                            className="CMyrTJ"
+                                                            className="CMyrTJ name_user"
                                                             onChange={(e) => handleInputChange('name_user', e.target.value)}
                                                         /></div>
                                                     </div>
@@ -166,7 +178,7 @@ const ProfileEditPages = () => {
                                                             name="email"
                                                             placeholder=""
                                                             value={dataEmployee.email || ""}
-                                                            className="CMyrTJ"
+                                                            className="CMyrTJ email"
                                                             onChange={(e) => handleInputChange('email', e.target.value)}
                                                         />
                                                         </div>
@@ -184,7 +196,7 @@ const ProfileEditPages = () => {
                                                                 name="link_social"
                                                                 placeholder=""
                                                                 value={dataEmployee.link_social || ""}
-                                                                className="CMyrTJ"
+                                                                className="CMyrTJ link_social"
                                                                 onChange={(e) => handleInputChange('link_social', e.target.value)}
                                                             />
                                                             {/* <input type="text" name="link_social" placeholder="" className="CMyrTJ" value={dataEmployee && dataEmployee.link_social} /> */}
@@ -221,7 +233,7 @@ const ProfileEditPages = () => {
                                                                 name="phone_number"
                                                                 placeholder=""
                                                                 value={dataEmployee.phone_number || ""}
-                                                                className="CMyrTJ"
+                                                                className="CMyrTJ phone_number"
                                                                 onChange={(e) => handleInputChange('phone_number', e.target.value)}
                                                             />
                                                         </div>
@@ -247,7 +259,7 @@ const ProfileEditPages = () => {
                                                         name="dob"
                                                         min="1900-01-01" max="2100-01-01"
                                                         value={dataEmployee && formatDate(dataEmployee.dob, "yy/mm/dd")}  // Không cần định dạng ở đây
-                                                        className="CMyrTJ"
+                                                        className="CMyrTJ dob"
                                                         onChange={(e) => {
                                                             handleInputChange('dob', e.target.value)
                                                         }}
@@ -265,7 +277,7 @@ const ProfileEditPages = () => {
                                                             name="literacy"
                                                             placeholder=""
                                                             value={dataEmployee.literacy || ""}
-                                                            className="CMyrTJ"
+                                                            className="CMyrTJ literacy"
                                                             onChange={(e) => handleInputChange('literacy', e.target.value)}
                                                         />
                                                         {/* <input id="avt_link_img" value={dataEmployee && dataEmployee.literacy} type="text" placeholder="" name="literacy" className="CMyrTJ" /> */}
@@ -288,9 +300,8 @@ const ProfileEditPages = () => {
                                     <div className="container-upload_img">
                                         <label htmlFor="input-img" className="preview">
                                             <i className="fas fa-cloud-upload-alt"></i>
-
                                         </label>
-                                        <input type="file" hidden id="input-img" name="img_post" className="upload-file" />
+                                        <input type="file" hidden id="input-img" name="img_post" className="upload-file" enctype="multipart/form-data" />
                                     </div>
                                 </div>
                             </div>
@@ -300,7 +311,7 @@ const ProfileEditPages = () => {
 
                     <input onClick={e => handleSubmit(e)}
                         type="submit"
-                        value= "Lưu"
+                        value="Lưu"
                         className="btn btn-solid-primary btn--m btn--inline"
                         disabled={isSaving}
                     />

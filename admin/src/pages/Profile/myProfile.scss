@@ -5,6 +5,14 @@
     overflow-x: hidden;
     box-shadow: 0px 6px 18px #00000073;
 
+    i.fa-solid.fa-circle-left {
+        font-size: 35px;
+        color: bisque;
+        top: 10px;
+        position: absolute;
+        left: 10px;
+    }
+
     .introduce-container {
         top: 100vh;
         width: inherit;
@@ -20,7 +28,7 @@
         }
 
         p.introduce {
-            text-align: initial;
+
 
             p.content-intro {
                 font-size: 16px;

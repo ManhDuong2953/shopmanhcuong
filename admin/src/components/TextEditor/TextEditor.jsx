@@ -7,7 +7,7 @@ const TextEditor = ({ parentComponent, placeholder, valueOld }) => {
   // Tạo cấu hình tùy chỉnh cho các module
   const modules = {
     toolbar: [
-      [{ 'font': [] }],
+      [{ 'font': [] }, { 'size': [] }], // Chỉ giữ tùy chọn font
       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
       ['bold', 'italic', 'underline', 'strike'],
       [{ 'color': [] }, { 'background': [] }],
@@ -19,6 +19,7 @@ const TextEditor = ({ parentComponent, placeholder, valueOld }) => {
       ['clean']
     ],
   };
+  
 
   const [valuePrev, setValuePrev] = useState("")
   useEffect(() => {
@@ -27,7 +28,6 @@ const TextEditor = ({ parentComponent, placeholder, valueOld }) => {
 
   // Hàm xử lý khi nội dung trình soạn thảo thay đổi
   const handleSucc = useCallback((e) => {
-    console.log(e);
     setValuePrev(e)
     parentComponent(e);
   }, [parentComponent]);

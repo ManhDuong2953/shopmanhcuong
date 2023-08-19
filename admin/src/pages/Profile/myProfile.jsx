@@ -27,6 +27,7 @@ function MyProfile() {
 
         <div className="my-profile-container">
             <header className="header-container"></header>
+            <Link to="/admin/managedEmployee"><i class="fa-solid fa-circle-left"></i></Link>
             <div className="content-profile">
                 <div className="quick-info">
                     <ThumbnailInfor data={dataEmployee} />

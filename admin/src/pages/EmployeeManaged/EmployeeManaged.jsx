@@ -68,7 +68,6 @@ function EmployeeManaged() {
         setKeywordValue(e)
     }
 
-    console.log(listEmployee);
 
 
 

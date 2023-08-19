@@ -4,7 +4,7 @@ const API_DELETE_EMPLOYEE = API_ADDRESS + "/employee/delete/"
 const API_UPDATE_EMPLOYEE = API_ADDRESS + "/employee/update/"
 const API_FILTER_EMPLOYEE = API_ADDRESS + "/employee/search/"
 const API_GET_ALL_EMPLOYEE = API_ADDRESS + "/employee/"
-const API_GET_EMPLOYEE_BY_ID = API_ADDRESS + "/employee/profile/"
+const API_GET_EMPLOYEE_BY_ID = API_ADDRESS + "/employee/"
 
 const API_GET_ALL_PRODUCT = API_ADDRESS + "/product/"
 const API_POST_PRODUCT = API_ADDRESS + "/product/addproduct"
@@ -28,7 +28,6 @@ export {
     API_FILTER_EMPLOYEE,
     API_GET_EMPLOYEE_BY_ID,
 
-    
     API_GET_ALL_PRODUCT,
     API_POST_PRODUCT,
     API_DELETE_PRODUCT,

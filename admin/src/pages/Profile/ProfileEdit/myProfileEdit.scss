@@ -1,7 +1,6 @@
 .profile-container {
     padding: 0 10px;
     height: 100%;
-
     .text-editor--main {
         .quill {
             padding: 0;
@@ -10,6 +9,7 @@
     }
 
     .proright {
+        text-align: center;
         height: inherit;
     }
 

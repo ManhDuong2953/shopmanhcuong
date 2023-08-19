@@ -32,10 +32,11 @@ export async function getEmployeeById(req, res) {
 export async function updateEmployeeById(req, res) {
     const userId = req.params.id;
     const userData = req.body;
-    const employee = new Employee(userData)
-    console.log(employee.dob);
-    const updatedUser = await employee.update(userId);
-    res.json(updatedUser);
+    const userMedia = req.file;
+    // const employee = new Employee(userData)
+    console.log(userData, userMedia);
+    // const updatedUser = await employee.update(userId);
+    // res.json(updatedUser);
 }
 
 
