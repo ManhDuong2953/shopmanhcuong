@@ -9,4 +9,3 @@ const pool = mysql.createPool({
   database: process.env.DBNAME,
 });
 export default pool;
-// Error: Cannot find module 'core-js/modules/es.promise.js'
