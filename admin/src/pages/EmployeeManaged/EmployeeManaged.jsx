@@ -132,8 +132,8 @@ function EmployeeManaged() {
                     </div>
                 </div>
 
-                {/* {
-                    listEmployee && listEmployee.map((employee, index) => (
+                {
+                    listEmployee.length >0  && listEmployee.map((employee, index) => (
                         <div className="row" key={index}>
 
                             <div className="cell" data-title="top">
@@ -166,7 +166,7 @@ function EmployeeManaged() {
                         </div>
 
                     ))
-                } */}
+                }
 
 
             </div>
