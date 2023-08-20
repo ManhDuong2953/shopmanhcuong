@@ -1,8 +1,7 @@
 import pool from "../../../configs/database/database.config"
 export default class Media {
     constructor(mediaInfo) {
-        this.id_media = mediaInfo.id_media || null;
-        this.image_data = mediaInfo.image_data || null;
+        this.image_data = mediaInfo.fieldname || null;
         this.fieldname = mediaInfo.fieldname || null;
         this.originalname = mediaInfo.originalname || null;
         this.encoding = mediaInfo.encoding || null;
@@ -11,30 +10,47 @@ export default class Media {
         this.filename = mediaInfo.filename || null;
         this.path = mediaInfo.path || null;
         this.size = mediaInfo.size || null;
-        this.time = mediaInfo.time || null;
+        this.time = new Date();
         this.id_link = mediaInfo.id_link || null;
         this.classify = mediaInfo.classify || null;
     }
 
-    async saveMedia(dataMedia) {
+    async saveMedia() {
         try {
-            const sql = 'INSERT INTO images SET ?';
-    
-            const [rows] = await pool.query(sql, dataMedia);
-            return rows.insertId;
-        } catch (error) {
-            console.error('Error saving media:', error);
-            throw error;
-        }
-    }
-    
+            // Kiểm tra xem id_link tồn tại trước khi xóa
+            const checkSql = 'SELECT id_link FROM images WHERE id_link = ?';
+            const [checkRows] = await pool.query(checkSql, this.id_link);
 
-    async getMediaByFieldname(fieldname) {
-        try {
-            const [rows] = await this.connection.query('SELECT * FROM images WHERE fieldname = ?', [fieldname]);
+            if (checkRows.length > 0) {
+                // Nếu id_link tồn tại, thực hiện DELETE và INSERT
+                const deleteSql = 'DELETE FROM images WHERE id_link = ?';
+                await pool.query(deleteSql, this.id_link);
+
+                // Thêm bản ghi mới
+                const insertSql = 'INSERT INTO images SET ?';
+                const dataMedia = {
+                    image_data: this.image_data,
+                    fieldname: this.fieldname,
+                    originalname: this.originalname,
+                    encoding: this.encoding,
+                    mimetype: this.mimetype,
+                    destination: this.destination,
+                    filename: this.filename,
+                    path: this.path,
+                    size: this.size,
+                    time: this.time,
+                    id_link: this.id_link,
+                    classify: this.classify
+                };
+                const [insertRows] = await pool.query(insertSql, dataMedia);
+            } else {
+                // Nếu id_link không tồn tại, bạn có thể thực hiện các hành động khác hoặc báo lỗi
+                console.log("id_link không tồn tại, không thể xóa");
+            }
+
             return rows;
         } catch (error) {
-            console.error('Error fetching media:', error);
+            console.error('Error saving media:', error);
             throw error;
         }
     }

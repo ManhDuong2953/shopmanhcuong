@@ -1,22 +1,31 @@
 import Media from "../../models/media/media.model";
-export async function addMedia(req, res) {
-    const media = req.file;
-    console.log(media,123);
-    // try {
-    //     const insertedId = await Media.saveMedia(media);
-    //     res.json({ id: insertedId });
-    // } catch (error) {
-    //     res.status(500).json({ error: 'Error saving media' });
-    // }
+const path = require('path');
+export async function addMedia(req, res,next) {
+    const dataFile = req.file;
+    console.log(req.body);
+    const id = req.body.id_user || req.body.id_product;
+    const classify = req.body.id_user ? "user" : req.body.id_product ? "product" : undefined;
+
+
+    try {
+        const media = new Media({ ...dataFile, "id_link": id, "classify": classify });
+        const insertedId = await media.saveMedia();
+        res.json({
+            note: "Gửi thành công!",
+            id: insertedId
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Error saving media' });
+    }
+    next();
 }
 
 export async function getMediaByFieldname(req, res) {
-    const fieldname = req.params.fieldname;
-    console.log(fieldname);
-    // try {
-    //     const media = await Media.getMediaByFieldname(fieldname);
-    //     res.json(media);
-    // } catch (error) {
-    //     res.status(500).json({ error: 'Error fetching media' });
-    // }
+    const filename = req.params.filename;
+    try {
+        res.sendFile(path.join(__dirname,"../../../uploads", filename));
+        
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching media' });
+    }
 }

@@ -1,7 +1,7 @@
 import { getAllEmployee, getEmployeeById, getEmployeeByKeyword, updateEmployeeById, deleteEmployeeById } from "../../../src/controllers/users/employee.controller"
-import { createUser } from "../../../src/controllers/users/user.controller"
-import MediaRouter from "../../Media/media.router"
-
+import { createUser } from "../../../src/controllers/users/user.controller";
+import { addMedia } from "../../../src/controllers/media/media.controller";
+import multer from "multer";
 const storage = multer.diskStorage({
     destination: "uploads/",
     filename: function (req, file, cb) {
@@ -17,7 +17,7 @@ const EmployeeRouter = (router) => {
     router.get('/employee/:id', getEmployeeById)
     router.post('/employee/register', createUser)
     router.get('/employee/search/:keyword', getEmployeeByKeyword)
-    router.post('/employee/update/:id', upload.single('mediaAdmin'), updateEmployeeById)
+    router.post('/employee/update/:id', upload.single('mediaAdmin'), addMedia, updateEmployeeById)
     router.delete('/employee/delete/:id', deleteEmployeeById)
     // router.use('/employee/', MediaRouter(router))
 

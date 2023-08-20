@@ -17,6 +17,8 @@ import RouterMains from '../routes/router';
 
 var app = express();
 
+
+// MIDDLEWARE
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -25,36 +27,27 @@ app.use(logger('dev'));
 // xử lý file, json, url, cookies
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //server
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-// app.get('/login', authorizationUser, function (req, res) {
-// 	res.cookie('token', accessToken, { maxAge: 3600000, httpOnly: true, secure: true });
-// })
-// //client
-// fetch('http://localhost:8000/login',
-// 	{
-// 		method: "GET",
-// 		credentials: 'include'
-//     })
-
-
 
 //Các định tuyến
 RouterMains(app)
 
-
 const port = process.env.PORT || 443; // Cổng cho HTTPS là 443
 app.listen(port, (req, res) => {
-	console.log(`Máy chủ đang lắng nghe tại https://localhost:${port}`);
+	console.log(`Máy chủ đang lắng nghe tại http://localhost:${port}`);
 })
 
 
 
-
+// app.get('/upload/:imageName', (req, res) => {
+//     const imageName = req.params.imageName;
+//     res.sendFile(path.join(__dirname,"../uploads", imageName));
+// });
 
 
 

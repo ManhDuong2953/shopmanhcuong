@@ -2,7 +2,13 @@ import "./ThumbnailInfor.scss"
 function ThumbnailInfor({ data }) {
     return (<>
         <div className="info_simple">
-            <img src="https://haycafe.vn/wp-content/uploads/2022/03/Hinh-anh-chan-dung-nam-dep-400x600.jpg" alt="avatar" />
+            <img
+                src={data.avatar_img ? "http://localhost:8080/media/" + data.avatar_img :
+                    "https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg"
+                }
+                alt="avatar"
+            />
+
             <h3 className="name_employee">{data && data.name_account}</h3>
             <div className="position">Nhân viên bán hàng</div>
             <div className="local-work"><small>tại</small> Mạnh Cường Shop</div>

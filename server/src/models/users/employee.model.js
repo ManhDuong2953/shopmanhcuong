@@ -89,18 +89,13 @@ export class Employee extends User {
   
     static async findEmployeeById(idUser) {
       try {
-        const query = "SELECT users.*, employees.* FROM users INNER JOIN employees ON users.id_user = employees.id_employee WHERE  id_user = ?";
+        const query = "SELECT users.*, employees.*, MAX(images.filename) AS avatar_img FROM users INNER JOIN employees ON users.id_user = employees.id_employee LEFT JOIN images ON users.id_user = images.id_link WHERE users.id_user = ? GROUP BY users.id_user; ";
         const [result] = await pool.query(query, [idUser]);
         return result;
       } catch (error) {
         console.log("Error in findUserById:", error);
         return null;
       }
-    }
-  
-  
-  
-  
-    
+    }  
   }
   

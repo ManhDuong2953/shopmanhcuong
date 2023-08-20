@@ -11,12 +11,11 @@ function MyProfile() {
     const { id } = useParams()
     const [dataEmployee, setDataEmployee] = useState([]); // set list of employees
     useEffect(() => {
-        console.log(API_GET_EMPLOYEE_BY_ID + id);
         fetch(API_GET_EMPLOYEE_BY_ID + id)
             .then(response => response.json())
             .then(data => {
                 setDataEmployee(data[0]); // Set the employee data
-                console.log(data);
+                console.log(data[0]);
             })
             .catch(error => {
                 console.error('Fetch error:', error);
@@ -27,7 +26,7 @@ function MyProfile() {
 
         <div className="my-profile-container">
             <header className="header-container"></header>
-            <Link to="/admin/managedEmployee"><i class="fa-solid fa-circle-left"></i></Link>
+            <Link to="/admin/managedEmployee"><i className="fa-solid fa-circle-left"></i></Link>
             <div className="content-profile">
                 <div className="quick-info">
                     <ThumbnailInfor data={dataEmployee} />

@@ -64,23 +64,13 @@ const ProfileEditPages = () => {
             body: formData
         })
             .catch(error => console.log(error));
-
-
-        // await fetch(API_UPDATE_EMPLOYEE + id, {
-        //     method: 'PUT',
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(dataEmployee)
-        // })
-        //     .catch(error => console.log(error));
     }
 
     useEffect(() => {
         async function actionUpdate() {
             if (isSaving) {
                 await handleUpdate();
-                // navigate(`/profile/${id}`); 
+                navigate(`/profile/${id}`); 
             }
         }
 
@@ -301,7 +291,7 @@ const ProfileEditPages = () => {
                                         <label htmlFor="input-img" className="preview">
                                             <i className="fas fa-cloud-upload-alt"></i>
                                         </label>
-                                        <input type="file" hidden id="input-img" name="img_post" className="upload-file" enctype="multipart/form-data" />
+                                        <input type="file" hidden id="input-img" name="img_post" className="upload-file" encType="multipart/form-data" />
                                     </div>
                                 </div>
                             </div>
