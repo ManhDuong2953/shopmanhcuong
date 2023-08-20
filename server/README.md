@@ -160,7 +160,7 @@ create table order_list (
 -- Bảng media
 create table `images` (
   `id_media` INT PRIMARY KEY AUTO_INCREMENT,
-  `image_data` LONGBLOB,
+  `image_data` TEXT,
   `fieldname` VARCHAR(255),
   `originalname` VARCHAR(255),
   `encoding` VARCHAR(255),
@@ -173,9 +173,6 @@ create table `images` (
   `classify` varchar(20),
   `id_link` INT -- liên kết với id người dùng hoặc sản phẩm (sản phẩm có thể chứa nhiều media)
 );
-
-
-
 
 -- Bảng thông báo
 create table notice (
@@ -194,31 +191,5 @@ create table notice (
 
 
 
-
--- Bảng người dùng
-create table userss (
-	id_user int primary key auto_increment, 
-	name_user varchar(255) not null,
-    name_account varchar(50) not null,
-    passwords varchar(20) not null,
-    phone_number varchar(20),
-    dob datetime,
-    gender varchar(25),
-    address varchar(255),
-    email varchar(255),
-    access_right varchar(100) default "Customer"
-);
-
-
--- Bảng nhân sự 
-create table employeess (
-	id_employee int primary key,
-    literacy varchar(100),
-    date_in datetime,
-    salary decimal(15,2),
-    foreign key (id_employee) references userss(id_user) 
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-);
 
 
