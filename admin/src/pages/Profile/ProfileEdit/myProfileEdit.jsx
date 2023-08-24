@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { API_GET_EMPLOYEE_BY_ID, API_UPDATE_EMPLOYEE } from "../../../configs/API";
+import { API_GET_EMPLOYEE_BY_ID, API_UPDATE_EMPLOYEE, API_MEDIA } from "../../../configs/API";
 import "./myProfileEdit.scss"
 import { useParams } from "react-router-dom";
 import getDataForm from "../../../components/handleForm/handleForm";
@@ -60,9 +60,12 @@ const ProfileEditPages = () => {
         }
 
         await fetch(API_UPDATE_EMPLOYEE + id, {
-            method: 'POST',
+            method: 'PATCH',
             body: formData
         })
+            .then(() => {
+                console.log("Thành công");
+            })
             .catch(error => console.log(error));
     }
 
@@ -70,7 +73,7 @@ const ProfileEditPages = () => {
         async function actionUpdate() {
             if (isSaving) {
                 await handleUpdate();
-                navigate(`/profile/${id}`); 
+                navigate(`/profile/${id}`);
             }
         }
 
@@ -91,6 +94,8 @@ const ProfileEditPages = () => {
 
 
 
+
+    //Xử lý ảnh 
     const imageAddedRef = useRef(false); // Sử dụng useRef để giữ trạng thái mà không gây ra việc render lại
     useEffect(() => {
         const inputImg = document.querySelector('#input-img');
@@ -106,11 +111,8 @@ const ProfileEditPages = () => {
             if (existingImgPreview) {
                 // Nếu đã có, xóa .img_preview trước khi thêm hình ảnh mới
                 previewContainer.removeChild(existingImgPreview);
-                document.querySelector(".fa-cloud-upload-alt").style.display = "block";
-
             }
 
-            document.querySelector(".fa-cloud-upload-alt").style.display = "none";
             let img = document.createElement('img');
             img.className = "img_preview";
             img.src = URL.createObjectURL(file);
@@ -122,7 +124,7 @@ const ProfileEditPages = () => {
         return () => {
             inputImg.removeEventListener('input', handleInputChange);
         };
-    }, []);
+    }, [dataEmployee]);
 
 
     return (
@@ -289,7 +291,13 @@ const ProfileEditPages = () => {
                                 <div className="scvgOW">
                                     <div className="container-upload_img">
                                         <label htmlFor="input-img" className="preview">
-                                            <i className="fas fa-cloud-upload-alt"></i>
+                                            {
+                                                dataEmployee && dataEmployee.avatar_img && imageAddedRef ? (
+                                                    <img src={API_MEDIA + dataEmployee.avatar_img} alt="" className="img_preview" />
+                                                ) :
+                                                    <i className="fas fa-cloud-upload-alt"></i>
+
+                                            }
                                         </label>
                                         <input type="file" hidden id="input-img" name="img_post" className="upload-file" encType="multipart/form-data" />
                                     </div>

@@ -3,7 +3,7 @@ import getDataForm from '../../components/handleForm/handleForm';
 import { API_GET_ALL_EMPLOYEE, API_POST_EMPLOYEE, API_FILTER_EMPLOYEE } from '../../configs/API';
 import './EmployeeManaged.scss';
 import { Link } from 'react-router-dom';
-import { formatDate, getAge } from '../../components/formatDate/formatDate';
+import {  getAge } from '../../components/formatDate/formatDate';
 import { calculateDaysWorked } from '../../components/formatDate/formatDate';
 
 function EmployeeManaged() {

@@ -3,15 +3,14 @@ const path = require("path");
 export async function addMedia(req, res, next) {
   const dataFile = req.file;
   const id = req.body.id_user || req.body.id_product;
-  const classify = req.body.id_user
-    ? "user"
-    : req.body.id_product
-    ? "product"
-    : undefined;
-
   try {
-    if (dataFile) {
+    if (dataFile && id) {
+      const classify = req.body.id_user ? "user"
+      : req.body.id_product
+      ? "product"
+      : undefined;
       const media = new Media({ ...dataFile, id_link: id, classify: classify });
+      console.log(media);
       const insertedId = await media.saveMedia();
       res.json({
         note: "Gửi thành công!",

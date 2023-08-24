@@ -8,6 +8,7 @@ import { TbLogout2 } from "react-icons/tb";
 import logowhite from "../../assets/logo/logowhite.png"
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+
 function NavBar() {
     const pathnameLocation = useLocation().pathname;
     useEffect(() => {

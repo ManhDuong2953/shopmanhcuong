@@ -5,7 +5,7 @@ const getDataForm = (parentElement) => {
     const dataMedia = document.querySelectorAll(`${parentElement} input[type="file"]`);
 
     dataRadio && (data[dataRadio.name] = dataRadio.value);
-    if (dataMedia && dataMedia.length > 0) {
+    if (dataMedia[0]&&dataMedia[0].files[0]) {
         data["mediaAdmin"] = dataMedia[0].files[0];
       }
     dataSubmit.forEach((element) => {
@@ -18,7 +18,7 @@ const getDataForm = (parentElement) => {
             data[name] = value;
         }
     })
-    console.log(data);
+    
     return data;
 }
 export default getDataForm

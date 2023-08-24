@@ -29,13 +29,45 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
+
 
 //server
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
+
+
+
 //Các định tuyến
 RouterMains(app)
+
+
+
+
+
+
+
+
+function convertFalsyToNull(req, res, next) {
+	const body = req.body; // Lấy dữ liệu từ request body
+	console.log(body);
+	// Lặp qua tất cả các thuộc tính của dữ liệu
+	// for (const key in body) {
+	// 	if (body.hasOwnProperty(key) && !body[key]) {
+	// 		body[key] = null;
+	// 	}
+	// }
+
+	// // Ghi đè dữ liệu đã được xử lý vào request body
+	// req.body = body;
+	next();
+}
+
+// Áp dụng middleware cho tất cả các yêu cầu
+app.use(convertFalsyToNull);
+
+
+
+
 
 const port = process.env.PORT || 443; // Cổng cho HTTPS là 443
 app.listen(port, (req, res) => {

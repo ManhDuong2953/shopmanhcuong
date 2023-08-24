@@ -26,29 +26,26 @@ export default class Media {
                 const deleteSql = 'DELETE FROM images WHERE id_link = ?';
                 await pool.query(deleteSql, this.id_link);
 
-                // Thêm bản ghi mới
-                const insertSql = 'INSERT INTO images SET ?';
-                const dataMedia = {
-                    image_data: this.image_data,
-                    fieldname: this.fieldname,
-                    originalname: this.originalname,
-                    encoding: this.encoding,
-                    mimetype: this.mimetype,
-                    destination: this.destination,
-                    filename: this.filename,
-                    path: this.path,
-                    size: this.size,
-                    time: this.time,
-                    id_link: this.id_link,
-                    classify: this.classify
-                };
-                const [insertRows] = await pool.query(insertSql, dataMedia);
-            } else {
-                // Nếu id_link không tồn tại, bạn có thể thực hiện các hành động khác hoặc báo lỗi
-                console.log("id_link không tồn tại, không thể xóa");
-            }
+            } 
+            // Thêm bản ghi mới
+            const insertSql = 'INSERT INTO images SET ?';
+            const dataMedia = {
+                image_data: this.image_data,
+                fieldname: this.fieldname,
+                originalname: this.originalname,
+                encoding: this.encoding,
+                mimetype: this.mimetype,
+                destination: this.destination,
+                filename: this.filename,
+                path: this.path,
+                size: this.size,
+                time: this.time,
+                id_link: this.id_link,
+                classify: this.classify
+            };
+            const [insertRows] = await pool.query(insertSql, dataMedia);
 
-            return rows;
+            return "Thành công";
         } catch (error) {
             console.error('Error saving media:', error);
             throw error;

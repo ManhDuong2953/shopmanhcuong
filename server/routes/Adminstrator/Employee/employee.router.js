@@ -1,6 +1,7 @@
 import { getAllEmployee, getEmployeeById, getEmployeeByKeyword, updateEmployeeById, deleteEmployeeById } from "../../../src/controllers/users/employee.controller"
 import { createUser } from "../../../src/controllers/users/user.controller";
 import { addMedia } from "../../../src/controllers/media/media.controller";
+import { checkMissingInputs } from "../../../middlewares";
 import multer from "multer";
 const storage = multer.diskStorage({
     destination: "uploads/",
@@ -15,10 +16,10 @@ const EmployeeRouter = (router) => {
     })
     router.get('/employee', getAllEmployee)
     router.get('/employee/:id', getEmployeeById)
-    router.post('/employee/register', createUser)
+    router.post('/employee/register',checkMissingInputs, createUser)
     router.get('/employee/search/:keyword', getEmployeeByKeyword)
-    router.post('/employee/update/:id', upload.single('mediaAdmin'), addMedia, updateEmployeeById)
-    router.delete('/employee/delete/:id', deleteEmployeeById)
+    router.patch('/employee/update/:id', upload.single('mediaAdmin'),checkMissingInputs, addMedia, updateEmployeeById)
+    router.delete('/employee/delete/:id',checkMissingInputs, deleteEmployeeById)
     // router.use('/employee/', MediaRouter(router))
 
     return router;

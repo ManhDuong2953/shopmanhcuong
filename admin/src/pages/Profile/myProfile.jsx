@@ -2,8 +2,8 @@
 import "./myProfile.scss";
 import { Link, useParams } from "react-router-dom";
 import ThumbnailInfor from "./ThumbnailInfor/ThumbnailInfor";
-import { API_GET_EMPLOYEE_BY_ID } from '../../configs/API';
-import { useEffect, useState } from "react";
+import { API_GET_EMPLOYEE_BY_ID, API_DELETE_EMPLOYEE } from '../../configs/API';
+import { useCallback, useEffect, useState } from "react";
 import { formatDate, getAge } from "../../components/formatDate/formatDate";
 
 
@@ -15,12 +15,18 @@ function MyProfile() {
             .then(response => response.json())
             .then(data => {
                 setDataEmployee(data[0]); // Set the employee data
-                console.log(data[0]);
             })
             .catch(error => {
                 console.error('Fetch error:', error);
             });
     }, []);
+
+
+    const handleDeleteEmployee = useCallback(() => {
+        fetch(API_DELETE_EMPLOYEE + id, {
+            method: 'DELETE'
+        })
+    }, [id])
 
     return (
 
@@ -53,7 +59,7 @@ function MyProfile() {
                             <Link to={`/admin/profile/edit/${id}`}>
                                 <button>Sửa thông tin<i className="fa-solid fa-pen-to-square"></i></button>
                             </Link>
-                            <Link to="/admin/profile/edit"><button>Sa thải<i className="fa-solid fa-scissors"></i></button></Link>
+                            <Link to="/admin/managedEmployee"><button onClick={handleDeleteEmployee}>Sa thải<i className="fa-solid fa-scissors"></i></button></Link>
                         </span>
                     </h2>
 
@@ -98,12 +104,17 @@ function MyProfile() {
                 </div>
 
             </div>
-            <div className="introduce-container">
-                <h2>
-                    Giới thiệu
-                </h2>
-                <p className="introduce">{dataEmployee && <p className="content-intro" dangerouslySetInnerHTML={{ __html: dataEmployee.introduce }} />}</p>
-            </div>
+            {
+                dataEmployee && dataEmployee.introduce && (
+
+                    <div className="introduce-container">
+                        <h2>
+                            Giới thiệu
+                        </h2>
+                        <p className="introduce">{dataEmployee && <p className="content-intro" dangerouslySetInnerHTML={{ __html: dataEmployee.introduce }} />}</p>
+                    </div>
+                )
+            }
         </div>
 
     );

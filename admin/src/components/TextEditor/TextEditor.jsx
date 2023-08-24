@@ -21,7 +21,7 @@ const TextEditor = ({ parentComponent, placeholder, valueOld }) => {
   };
   
 
-  const [valuePrev, setValuePrev] = useState("")
+  const [valuePrev, setValuePrev] = useState(null)
   useEffect(() => {
     setValuePrev(valueOld)
   }, [valueOld]);
