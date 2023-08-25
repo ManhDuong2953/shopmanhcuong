@@ -3,12 +3,7 @@ import { createUser } from "../../../src/controllers/users/user.controller";
 import { addMedia } from "../../../src/controllers/media/media.controller";
 import { checkMissingInputs } from "../../../middlewares";
 import multer from "multer";
-const storage = multer.diskStorage({
-    destination: "uploads/",
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
+const storage = multer.memoryStorage(); // Sử dụng MemoryStorage
 const upload = multer({ storage: storage });
 const EmployeeRouter = (router) => {
     router.get('/', (req, res) => {

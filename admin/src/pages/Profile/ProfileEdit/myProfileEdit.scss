@@ -1,6 +1,7 @@
 .profile-container {
     padding: 0 10px;
     height: 100%;
+
     .text-editor--main {
         .quill {
             padding: 0;
@@ -250,7 +251,7 @@
         cursor: pointer;
     }
 
-    .btn:hover{
+    .btn:hover {
         background-color: #d52157;
         color: rgb(175, 243, 255);
     }
@@ -318,6 +319,9 @@
     .preview i {
         font-size: 60px;
         margin-bottom: 20px;
+        position: absolute;
+        z-index: 0;
+        right: 17%;
     }
 
     img.upload-file {
@@ -335,6 +339,7 @@
         height: auto;
         object-fit: contain;
         overflow: hidden;
+        position: sticky;
     }
 
     .push-img {

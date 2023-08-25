@@ -1,25 +1,30 @@
 import { v2 as cloudinary } from 'cloudinary';
 
+cloudinary.config({
+    cloud_name: 'der2ygna3',
+    api_key: '268779123315888',
+    api_secret: 'doWpglhaxPBkH76oq2Klk7ylE6k'
+});
 
-function UploadCloudinary(file,folder) {
-    cloudinary.config({
-        cloud_name: 'der2ygna3',
-        api_key: '268779123315888',
-        api_secret: 'doWpglhaxPBkH76oq2Klk7ylE6k'
-    });
-    console.log("Uploading cloudinary...", file, folder);
-    // Tải lên tệp MP3
-    cloudinary.uploader.upload(file, {
-        resource_type: 'auto',  // Loại tệp tự định dạng
-        folder: folder,        // Thư mục trên Cloudinary
-        overwrite: true         // Ghi đè nếu tên tệp đã tồn tại
-    }, function (error, result) {
-        if (error) {
-            console.error(error);
-        } else {
-            console.log(result);
-        }
-    });
+export default async function UploadCloudinary(file, folder) {
+    try {
+        const result = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream({
+                resource_type: 'auto',
+                folder: folder,
+                overwrite: true
+            }, (error, result) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(result);
+                }
+            }).end(file.buffer);
+        });
+        
+        return result;
+    } catch (error) {
+        console.error("Lỗi khi tải lên:", error);
+        return null;
+    }
 }
-
-export default UploadCloudinary;

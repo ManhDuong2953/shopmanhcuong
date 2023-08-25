@@ -1,5 +1,5 @@
 import "./ThumbnailInfor.scss";
-import { API_MEDIA } from "../../../configs/API";
+
 function ThumbnailInfor({ data }) {
   return (
     <>
@@ -7,7 +7,7 @@ function ThumbnailInfor({ data }) {
         <img
           src={
             data && data.avatar_img
-              ? API_MEDIA + data.avatar_img
+              ? data.avatar_img
               : "https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg"
           }
           alt="avatar"

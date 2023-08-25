@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { API_GET_EMPLOYEE_BY_ID, API_UPDATE_EMPLOYEE, API_MEDIA } from "../../../configs/API";
+import { API_GET_EMPLOYEE_BY_ID, API_UPDATE_EMPLOYEE } from "../../../configs/API";
 import "./myProfileEdit.scss"
 import { useParams } from "react-router-dom";
 import getDataForm from "../../../components/handleForm/handleForm";
@@ -292,8 +292,9 @@ const ProfileEditPages = () => {
                                     <div className="container-upload_img">
                                         <label htmlFor="input-img" className="preview">
                                             {
-                                                dataEmployee && dataEmployee.avatar_img && imageAddedRef ? (
-                                                    <img src={API_MEDIA + dataEmployee.avatar_img} alt="" className="img_preview" />
+                                                dataEmployee && dataEmployee.avatar_img ? 
+                                                (
+                                                    <img src={dataEmployee.avatar_img} alt="" className="img_preview" />
                                                 ) :
                                                     <i className="fas fa-cloud-upload-alt"></i>
 

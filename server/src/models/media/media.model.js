@@ -1,7 +1,7 @@
 import pool from "../../../configs/database/database.config"
 export default class Media {
     constructor(mediaInfo) {
-        this.image_data = mediaInfo.fieldname || null;
+        this.image_data = mediaInfo.url || null;
         this.fieldname = mediaInfo.fieldname || null;
         this.originalname = mediaInfo.originalname || null;
         this.encoding = mediaInfo.encoding || null;
@@ -26,7 +26,7 @@ export default class Media {
                 const deleteSql = 'DELETE FROM images WHERE id_link = ?';
                 await pool.query(deleteSql, this.id_link);
 
-            } 
+            }
             // Thêm bản ghi mới
             const insertSql = 'INSERT INTO images SET ?';
             const dataMedia = {
@@ -45,10 +45,13 @@ export default class Media {
             };
             const [insertRows] = await pool.query(insertSql, dataMedia);
 
-            return "Thành công";
+            return insertRows;
         } catch (error) {
             console.error('Error saving media:', error);
             throw error;
         }
     }
+
+
+
 }

@@ -14,7 +14,6 @@ const API_FILTER_PRODUCT = API_ADDRESS + "/product/search"
 const API_GET_PRODUCT_BY_ID = API_ADDRESS + "/product/detail/"
 
 
-const API_MEDIA = API_ADDRESS+ "/media/"
 
 
 
@@ -37,5 +36,5 @@ export {
     API_FILTER_PRODUCT,
     API_GET_PRODUCT_BY_ID,
 
-    API_MEDIA
+
 }
