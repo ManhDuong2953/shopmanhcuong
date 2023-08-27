@@ -1,5 +1,6 @@
 import "./loginPage.scss";
 import { Link } from "react-router-dom";
+
 function LoginPage() {
   return (
     <div className="bodyLogin">

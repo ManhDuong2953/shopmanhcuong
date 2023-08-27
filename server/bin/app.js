@@ -7,7 +7,6 @@ var cookieParser = require('cookie-parser');
 // const cookieSession = require('cookie-session');
 var logger = require('morgan');
 const bodyParser = require('body-parser');
-// const jwt = require('jsonwebtoken');
 const https = require('https');
 const fs = require('fs');
 const cors = require('cors');
@@ -39,32 +38,6 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 //Các định tuyến
 RouterMains(app)
-
-
-
-
-
-
-
-
-function convertFalsyToNull(req, res, next) {
-	const body = req.body; // Lấy dữ liệu từ request body
-	console.log(body);
-	// Lặp qua tất cả các thuộc tính của dữ liệu
-	// for (const key in body) {
-	// 	if (body.hasOwnProperty(key) && !body[key]) {
-	// 		body[key] = null;
-	// 	}
-	// }
-
-	// // Ghi đè dữ liệu đã được xử lý vào request body
-	// req.body = body;
-	next();
-}
-
-// Áp dụng middleware cho tất cả các yêu cầu
-app.use(convertFalsyToNull);
-
 
 
 

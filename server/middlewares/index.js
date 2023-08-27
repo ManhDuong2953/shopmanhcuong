@@ -1,4 +1,6 @@
 import moment from "moment";
+const jwt = require('jsonwebtoken');
+
 
 export async function checkMissingInputs(req, res, next) {
     const body = await req.body;
@@ -17,4 +19,45 @@ export async function checkMissingInputs(req, res, next) {
     req.body = body;
 
     next();
+}
+
+
+
+function generateRandomString(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters.charAt(randomIndex);
+    }
+    return result;
+}
+
+
+export function createAccessToken(req, res, next) {
+    if (req.body.data.id_user && req.body.data.name_account && req.body.data.passwords && req.body.data.access_right) {
+        const payload = {
+            id: req.body.data.id_user,
+            name_account: req.body.data.name_account,
+            access_right: req.body.data.access_right
+        }
+        const sceretKeys = req.body.data.passwords;
+        const accessToken = jwt.sign(payload, sceretKeys, {
+            expiresIn: '5m', //
+        });
+
+        const refreshToken = jwt.sign(payload, generateRandomString(10), {
+            expiresIn: '5h', //
+        });
+        req.body.accessToken = accessToken;
+        req.body.refreshToken = refreshToken;
+    }
+    req.body.data = {} // xóa dữ liệu người dùng
+    next();
+}
+
+
+export function Authorization(req, res, next) {
+
 }

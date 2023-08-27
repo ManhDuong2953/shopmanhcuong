@@ -91,7 +91,7 @@ export class User {
       console.log("Error in update:", error);
     }
   }
-  
+
   static async deleteUserById(idUser) {
     try {
       const query = "DELETE FROM users WHERE id_user = ?";
@@ -101,8 +101,4 @@ export class User {
       console.log("Error in deleteUserById:", error);
     }
   }
-};
-
-
-
-
+}

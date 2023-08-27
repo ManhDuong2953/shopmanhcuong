@@ -15,6 +15,8 @@ const API_GET_PRODUCT_BY_ID = API_ADDRESS + "/product/detail/"
 
 
 
+const API_LOGIN_USER = API_ADDRESS + "/login"
+
 
 
 
@@ -22,6 +24,7 @@ const API_GET_PRODUCT_BY_ID = API_ADDRESS + "/product/detail/"
 
 
 export {
+    API_LOGIN_USER,
     API_GET_ALL_EMPLOYEE,
     API_UPDATE_EMPLOYEE,
     API_DELETE_EMPLOYEE,

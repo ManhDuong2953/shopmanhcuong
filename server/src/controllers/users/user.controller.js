@@ -1,5 +1,5 @@
 // controllers/userController.js
-import { User, Employee } from "../../models/users/user.model";
+import { User } from "../../models/users/user.model";
 
 
 export async function createUser(req, res) {
@@ -8,8 +8,6 @@ export async function createUser(req, res) {
     const newUser = await user.save();
     res.json(newUser);
 }
-
-
 
 
 

@@ -5,18 +5,14 @@ import { checkMissingInputs } from "../../../middlewares";
 import multer from "multer";
 const storage = multer.memoryStorage(); // Sử dụng MemoryStorage
 const upload = multer({ storage: storage });
-const EmployeeRouter = (router) => {
-    router.get('/', (req, res) => {
-        res.send("Quyền truy cập nhân viên")
-    })
-    router.get('/employee', getAllEmployee)
-    router.get('/employee/:id', getEmployeeById)
-    router.post('/employee/register',checkMissingInputs, createUser)
-    router.get('/employee/search/:keyword', getEmployeeByKeyword)
-    router.patch('/employee/update/:id', upload.single('mediaAdmin'),checkMissingInputs, addMedia, updateEmployeeById)
-    router.delete('/employee/delete/:id',checkMissingInputs, deleteEmployeeById)
-    // router.use('/employee/', MediaRouter(router))
 
+const EmployeeRouter = (router) => {
+    router.get('/', getAllEmployee)
+    router.get('/:id', getEmployeeById)
+    router.post('/register',checkMissingInputs, createUser)
+    router.get('/search/:keyword', getEmployeeByKeyword)
+    router.patch('/update/:id', upload.single('mediaAdmin'),checkMissingInputs, addMedia, updateEmployeeById)
+    router.delete('/delete/:id',checkMissingInputs, deleteEmployeeById)
     return router;
 }
 export default EmployeeRouter

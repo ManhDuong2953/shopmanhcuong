@@ -13,7 +13,7 @@ create table users (
     gender varchar(25),
     address varchar(255),
     email varchar(255),
-    access_right varchar(100) default "Customer",
+    access_right varchar(100) default "Customer"
 );
 
 
@@ -23,15 +23,12 @@ create table employees (
     literacy varchar(100),
     date_in date,
     link_social varchar(255),
-    salary decimal(15,2),
+    salary decimal(15,2)  default 0,
     introduce longtext,
     foreign key (id_employee) references users(id_user) 
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-
-
-
 
 
 
@@ -185,7 +182,16 @@ create table notice (
 );
 
 
-
+-- bảng token
+create table token_login(
+	id int primary key auto_increment,
+	id_user int,
+	access_token varchar(255),
+	refresh_token varchar(255),
+    foreign key (id_user) references users(id_user)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
 
 
 
