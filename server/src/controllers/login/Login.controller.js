@@ -1,7 +1,8 @@
 import { checkLogin, checkToken } from "../../models/login/Login.model";
 
 export async function UserLogin(req, res, next) {
-    var cookie = req.cookies.accessToken;
+    // var cookie = req.cookies.accessToken;
+    var cookie = null;
 
     // if(cookie){
     //     const isAccessToken = await User.checkToken(cookie);

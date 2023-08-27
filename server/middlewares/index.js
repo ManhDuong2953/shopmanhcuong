@@ -53,11 +53,11 @@ export function createAccessToken(req, res, next) {
         req.body.accessToken = accessToken;
         req.body.refreshToken = refreshToken;
     }
-    req.body.data = {} // xóa dữ liệu người dùng
+    // req.body.data = {} // xóa dữ liệu người dùng
     next();
 }
 
 
-export function Authorization(req, res, next) {
+// export function Authorization(req, res, next) {
 
-}
+// }

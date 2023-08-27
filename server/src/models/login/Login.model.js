@@ -26,10 +26,10 @@ export async function checkToken(token) {
 }
 
 
-export async function postToken(token) {
+export async function postToken(idUser, accessToken, refreshToken) {
     try {
-        const query = "SELECT * FROM token_login WHERE access_token = ?";
-        const [result] = await pool.execute(query, token);
+        const query = "INSERT INTO token_login(id_user, access_token, refresh_token, expiration_date) value(?,?,?,?)";
+        const [result] = await pool.execute(query, [idUser, accessToken, refreshToken]);
         return result;
     }
     catch (error) {
