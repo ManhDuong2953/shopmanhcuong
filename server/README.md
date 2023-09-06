@@ -185,14 +185,13 @@ create table notice (
 -- bảng token
 create table token_login(
 	id int primary key auto_increment,
-	id_user int,
-	access_token varchar(255),
-	refresh_token varchar(255),
-    foreign key (id_user) references users(id_user)
+	id_user int not null,
+	refresh_token varchar(255) not null,
+	expiration_date text,
+	foreign key (id_user) references users(id_user)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-
 
 
 

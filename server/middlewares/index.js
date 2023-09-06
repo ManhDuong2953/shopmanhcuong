@@ -1,6 +1,6 @@
 import moment from "moment";
 const jwt = require('jsonwebtoken');
-
+require("dotenv").config();
 
 export async function checkMissingInputs(req, res, next) {
     const body = await req.body;
@@ -36,18 +36,18 @@ function generateRandomString(length) {
 
 
 export function createAccessToken(req, res, next) {
-    if (req.body.data.id_user && req.body.data.name_account && req.body.data.passwords && req.body.data.access_right) {
+    if (req.body.data.id_user && req.body.data.name_account && req.body.data.access_right) {
         const payload = {
             id: req.body.data.id_user,
             name_account: req.body.data.name_account,
             access_right: req.body.data.access_right
         }
-        const sceretKeys = req.body.data.passwords;
-        const accessToken = jwt.sign(payload, sceretKeys, {
+
+        const accessToken = jwt.sign(payload, process.env.SECRETKEYACCESSTOKEN, {
             expiresIn: '5m', //
         });
 
-        const refreshToken = jwt.sign(payload, generateRandomString(10), {
+        const refreshToken = jwt.sign(payload,  process.env.SECRETKEYREFRESHTOKEN, {
             expiresIn: '5h', //
         });
         req.body.accessToken = accessToken;

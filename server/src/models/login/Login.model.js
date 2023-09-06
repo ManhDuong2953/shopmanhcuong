@@ -1,4 +1,6 @@
 import pool from "../../../configs/database/database.config";
+const jwt = require('jsonwebtoken');
+require("dotenv").config()
 export async function checkLogin({ name_account, passwords }) {
     try {
         const query = "SELECT * FROM users WHERE name_account = ? AND passwords = ?";
@@ -13,11 +15,21 @@ export async function checkLogin({ name_account, passwords }) {
     }
 };
 
-export async function checkToken(token) {
+
+
+
+export async function checkExpiredToken(token, sceretKey) {
+
     try {
-        const query = "SELECT * FROM token_login WHERE access_token = ?";
+        const query = "SELECT * FROM token_login WHERE refresh_token = ?";
         const [result] = await pool.execute(query, token);
-        return result;
+        if (result) {
+            const decode = jwt.verify(token, sceretKey)
+            if (parseInt(decode.exp) > Date.now() / 1000) {
+                return true
+            }
+        }
+        return false;
     }
     catch (error) {
         console.log(error.message);
@@ -26,10 +38,10 @@ export async function checkToken(token) {
 }
 
 
-export async function postToken(idUser, accessToken, refreshToken) {
+export async function postToken(idUser, refreshToken, EXP) {
     try {
-        const query = "INSERT INTO token_login(id_user, access_token, refresh_token, expiration_date) value(?,?,?,?)";
-        const [result] = await pool.execute(query, [idUser, accessToken, refreshToken]);
+        const query = "INSERT INTO token_login(id_user, refresh_token, expiration_date) value(?,?,?)";
+        const [result] = await pool.execute(query, [idUser, refreshToken, EXP]);
         return result;
     }
     catch (error) {
